@@ -18,4 +18,8 @@ public class Dose {
 
     @CreationTimestamp
     private Date vaccinationDate;
+
+    @OneToOne
+    @JoinColumn
+    private User user;
 }

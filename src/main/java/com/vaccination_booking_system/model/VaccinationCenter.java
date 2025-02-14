@@ -1,12 +1,12 @@
 package com.vaccination_booking_system.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,4 +25,9 @@ public class VaccinationCenter {
     private String address;
 
     private int doseCapacity;
+
+
+    @OneToMany(mappedBy = "vaccinationCenter",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Doctor>doctorList=new ArrayList<>();
 }

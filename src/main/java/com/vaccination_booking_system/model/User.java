@@ -1,8 +1,12 @@
 package com.vaccination_booking_system.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vaccination_booking_system.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -24,4 +28,12 @@ public class User {
     private Gender gender;
 
     private String mobile;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Appointment>appointmentList=new ArrayList<>();
+
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Dose dose;
 }

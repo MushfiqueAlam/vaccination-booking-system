@@ -1,5 +1,6 @@
 package com.vaccination_booking_system.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,4 +19,13 @@ public class Appointment {
     private Date appointmentDate;
 
     private LocalDateTime appointmentTime;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn
+    private User user;
+
+    @ManyToOne
+    @JoinColumn
+    private Doctor doctor;
 }
