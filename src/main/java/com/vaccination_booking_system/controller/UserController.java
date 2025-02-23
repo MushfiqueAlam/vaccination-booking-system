@@ -5,6 +5,7 @@ import com.vaccination_booking_system.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,4 +31,12 @@ public class UserController {
         List<User>userList=userService.getAllUser();
         return userList;
     }
+
+
+    @GetMapping("/getVaccinationDate")
+    public Date vaccinationDate(@RequestParam("userId") Integer userId){
+        return userService.getVacccDate(userId);
+    }
+
+
 }

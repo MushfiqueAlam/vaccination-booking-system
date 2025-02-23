@@ -1,10 +1,13 @@
 package com.vaccination_booking_system.services;
 
+import com.vaccination_booking_system.model.Dose;
 import com.vaccination_booking_system.model.User;
 import com.vaccination_booking_system.repository.UserRepository;
+import com.vaccination_booking_system.requestDto.UpdateEmailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,5 +31,20 @@ public class UserService {
     public List<User> getAllUser(){
         List<User>userList=userRepository.findAll();
         return userList;
+    }
+
+    public Date getVacccDate(Integer userId){
+
+        User user=userRepository.findById(userId).get();
+        Dose dose=user.getDose();
+        return dose.getVaccinationDate();
+    }
+
+    public String updateEmail(UpdateEmailDto updateEmailDto){
+        Integer userId= updateEmailDto.getUserId();
+        User user=userRepository.findById(userId).get();
+        user.setEmailId(updateEmailDto.getNewEmail());
+        userRepository.save(user);
+        return "email has been modified with this email id "+updateEmailDto.getNewEmail();
     }
 }
