@@ -1,5 +1,6 @@
 package com.vaccination_booking_system.services;
 
+import com.vaccination_booking_system.exceptions.UserNotFoundException;
 import com.vaccination_booking_system.model.Dose;
 import com.vaccination_booking_system.model.User;
 import com.vaccination_booking_system.repository.UserRepository;
@@ -46,5 +47,13 @@ public class UserService {
         user.setEmailId(updateEmailDto.getNewEmail());
         userRepository.save(user);
         return "email has been modified with this email id "+updateEmailDto.getNewEmail();
+    }
+
+    public User getUserByEmail(String email) throws UserNotFoundException {
+        User user =userRepository.getByEmailId(email);
+        if(user==null){
+            throw new UserNotFoundException("User not available with this email id "+email);
+        }
+        return user;
     }
 }

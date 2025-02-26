@@ -1,5 +1,6 @@
 package com.vaccination_booking_system.controller;
 
+import com.vaccination_booking_system.exceptions.UserNotFoundException;
 import com.vaccination_booking_system.model.User;
 import com.vaccination_booking_system.requestDto.UpdateEmailDto;
 import com.vaccination_booking_system.services.UserService;
@@ -42,6 +43,11 @@ public class UserController {
     @PutMapping("/update")
     public String updateEmail(@RequestBody UpdateEmailDto updateEmailDto){
         return userService.updateEmail(updateEmailDto);
+    }
+
+    @GetMapping("/findByEmail/{email}")
+    private User findByEmail(@PathVariable("email") String email) throws UserNotFoundException {
+        return userService.getUserByEmail(email);
     }
 
 }
