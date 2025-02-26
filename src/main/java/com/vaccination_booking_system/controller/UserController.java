@@ -1,6 +1,7 @@
 package com.vaccination_booking_system.controller;
 
 import com.vaccination_booking_system.model.User;
+import com.vaccination_booking_system.requestDto.UpdateEmailDto;
 import com.vaccination_booking_system.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,9 @@ public class UserController {
         return userService.getVacccDate(userId);
     }
 
+    @PutMapping("/update")
+    public String updateEmail(@RequestBody UpdateEmailDto updateEmailDto){
+        return userService.updateEmail(updateEmailDto);
+    }
 
 }
