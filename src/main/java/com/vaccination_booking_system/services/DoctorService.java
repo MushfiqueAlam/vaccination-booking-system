@@ -10,6 +10,7 @@ import com.vaccination_booking_system.repository.DoctorRepository;
 import com.vaccination_booking_system.repository.VaccinationCenterRepository;
 import com.vaccination_booking_system.requestDto.AssociateDoctorDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -57,6 +58,14 @@ public class DoctorService {
 
 
         return "Doctor has been associated";
+    }
+
+    public Doctor getDoctor(Integer id) throws DoctorNotFoundException {
+        Doctor doctor=doctorRepository.findById(id).get();
+        if(doctor==null){
+            throw new DoctorNotFoundException("Doctor not found");
+        }
+        return doctor;
     }
 
 }
