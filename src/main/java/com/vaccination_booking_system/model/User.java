@@ -29,7 +29,7 @@ public class User {
 
     private String mobile;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Appointment>appointmentList=new ArrayList<>();
 

@@ -28,5 +28,6 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     private Doctor doctor;
 }
