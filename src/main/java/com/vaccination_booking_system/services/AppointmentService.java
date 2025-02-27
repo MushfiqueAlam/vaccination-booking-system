@@ -1,8 +1,61 @@
 package com.vaccination_booking_system.services;
 
+import com.vaccination_booking_system.exceptions.DoctorNotFoundException;
+import com.vaccination_booking_system.exceptions.UserNotFoundException;
+import com.vaccination_booking_system.model.Appointment;
+import com.vaccination_booking_system.model.Doctor;
+import com.vaccination_booking_system.model.User;
+import com.vaccination_booking_system.repository.AppointmentRepository;
+import com.vaccination_booking_system.repository.DoctorRepository;
+import com.vaccination_booking_system.repository.UserRepository;
+import com.vaccination_booking_system.requestDto.AppointmentRequestDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Service
 public class AppointmentService {
 
+    @Autowired
+    AppointmentRepository appointmentRepository;
+
+    @Autowired
+    DoctorRepository doctorRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+//    @Autowired
+//    private JavaMailSender javaMailSender;
+
+    public String bookAppointment(AppointmentRequestDto appointmentRequestDto) throws DoctorNotFoundException, UserNotFoundException {
+        Doctor doctor=doctorRepository.findById(appointmentRequestDto.getDoctorId()).get();
+        if(doctor==null){
+            throw new DoctorNotFoundException("Doctor is not available with this id");
+        }
+
+        User user=userRepository.findById(appointmentRequestDto.getUserId()).get();
+        if(user==null){
+            throw new UserNotFoundException("User not found");
+        }
+
+        Appointment appointment=new Appointment();
+        appointment.setAppointmentDate(appointmentRequestDto.getAppointmentDate());
+        appointment.setAppointmentTime(appointmentRequestDto.getAppointmentTime());
+        appointment.setDoctor(doctor);
+        appointment.setUser(user);
+
+
+        appointment=appointmentRepository.save(appointment);
+
+        doctor.getAppointmentList().add(appointment);
+        user.getAppointmentList().add(appointment);
+
+        doctorRepository.save(doctor);
+        userRepository.save(user);
+        return "Appointment is successfully given";
+    }
 }

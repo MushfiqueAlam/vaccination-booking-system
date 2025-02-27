@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,7 @@ public class Appointment {
 
     private Date appointmentDate;
 
-    private LocalDateTime appointmentTime;
+    private LocalTime appointmentTime;
 
     @ManyToOne
     @JsonIgnore
